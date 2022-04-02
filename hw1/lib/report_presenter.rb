@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/Report'
+require './lib/report'
 
 # Класс вывода отчетов
 class ReportPresenter

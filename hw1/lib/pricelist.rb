@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Class Price
-class Price
+# Class PriceList
+class PriceList
   def initialize(prices)
     @prices = prices
   end

@@ -4,26 +4,17 @@ require 'csv'
 
 # class Parser
 class Parser
-  def initialize
-    @dir = ''
-    @keys = %i[]
+  def initialize(dir, keys)
+    @dir = dir
+    @keys = keys
   end
 
   # Возвращает массив хешей
   def pull_hash
-    convert_to_hash
-  end
-
-  # Возвращает массив строк
-  def pull_arr
-    read
+    read.collect { |a| Hash[[@keys, a].transpose] }
   end
 
   def read
     CSV.read(@dir)
-  end
-
-  def convert_to_hash
-    read.collect { |a| Hash[[@keys, a].transpose] }
   end
 end
