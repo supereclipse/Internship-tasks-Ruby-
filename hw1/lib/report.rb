@@ -12,11 +12,11 @@ class Report
   end
 
   def expensive(n)
-    @vm_list.map { |vm| [vm.id, VMCost.new(vm, @price_list, @volume_list.find { |vol| vol.vm_id == vm.id }).cost_full] }.sort_by { |_id, value| value }.last(n).reverse
+    sort_by_value(@vm_list.map { |vm| [vm.id, calc_cost(vm)] }, n)
   end
 
   def cheap(n)
-    @vm_list.map { |vm| [vm.id, VMCost.new(vm, @price_list, @volume_list.find { |vol| vol.vm_id == vm.id }).cost_full] }.sort_by { |_id, value| value }.first(n)
+    @vm_list.map { |vm| [vm.id, calc_cost(vm)] }.sort_by { |_id, value| value }.first(n)
   end
 
   # Выводит n ВМ с наибольшим обьемом указанного параметра (cpu,ram,hdd_capacity)
@@ -36,5 +36,9 @@ class Report
 
   def sort_by_value (list, n)
     list.sort_by { |_id, value| value }.last(n).reverse
+  end
+
+  def calc_cost(vm)
+    VMCost.new(vm, @price_list, @volume_list.find { |vol| vol.vm_id == vm.id }).cost_full
   end
 end
