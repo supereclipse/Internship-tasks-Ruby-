@@ -14,6 +14,8 @@ class Parser
     read.collect { |a| Hash[[@keys, a].transpose] }
   end
 
+  private
+
   def read
     CSV.read(@dir)
   end

@@ -14,6 +14,8 @@ class Main
     present
   end
 
+  private
+
   def set_data
     @volumes_data = Parser.new(ENV['volumes_path'], %i[Vm_id Hdd_type Hdd_capacity]).pull_hash
     @vms_data = Parser.new(ENV['vms_path'], %i[Id Cpu Ram Hdd_type Hdd_capacity]).pull_hash

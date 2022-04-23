@@ -34,6 +34,8 @@ class Report
     sort_by_value(@volume_list.map { |extra| [extra.vm_id, extra.get_volume_of_type(type)] }, n)
   end
 
+  private
+
   def sort_by_value (list, n)
     list.sort_by { |_id, value| value }.last(n).reverse
   end
