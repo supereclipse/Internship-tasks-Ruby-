@@ -7,6 +7,6 @@ class PriceList
   end
 
   def get_price_by_type(type)
-    @prices.map { |row| return row[:Price].to_i if row[:Type] == type }
+    @prices.each { |row| return row[:Price].to_i if row[:Type] == type }
   end
 end

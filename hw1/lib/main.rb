@@ -3,19 +3,40 @@
 require './lib/report'
 require './lib/report_presenter'
 
-vm_list = VMSDataHandler.create_vm_list
-volume_list = VolumesDataHandler.create_volume_list
-price = PricesDataHandler.create_price_list
+# Main class for HW1 Kuzmenkov Arseniy
+class Main
+  def initialize
+    @depth = ENV['depth'].to_i
 
-report = Report.new(vm_list, volume_list, price)
+    set_data
+    set_lists
+    set_report
+    present
+  end
 
-puts 'Самые дорогие'
-ReportPresenter.present(report.expensive(3))
-puts 'Самые дешевые'
-ReportPresenter.present(report.cheap(3))
-puts 'Самые обьемные'
-ReportPresenter.present(report.most_capacity_of_type(3, 'cpu'))
-puts 'Самое большое кол-во доп. дисков'
-ReportPresenter.present(report.e_volume_amount(3, 'ssd'))
-puts 'Самый большой обьем доп. дисков'
-ReportPresenter.present(report.e_volume_volume(3, 'sata'))
+  def set_data
+    @volumes_data = Parser.new(ENV['volumes_path'], %i[Vm_id Hdd_type Hdd_capacity]).pull_hash
+    @vms_data = Parser.new(ENV['vms_path'], %i[Id Cpu Ram Hdd_type Hdd_capacity]).pull_hash
+    @prices_data = Parser.new(ENV['prices_path'], %i[Type Price]).pull_hash
+  end
+
+  def set_lists
+    @vm_list = VMSDataHandler.new(@vms_data).create_vm_list
+    @volume_list = VolumesDataHandler.new(@volumes_data).create_volume_list
+    @price_list = PricesDataHandler.new(@prices_data).create_price_list
+  end
+
+  def set_report
+    @report = Report.new(@vm_list, @volume_list, @price_list)
+  end
+
+  def present
+    ReportPresenter.present(@report.expensive(@depth), 'Самые дорогие')
+    ReportPresenter.present(@report.cheap(@depth), 'Самые дешевые')
+    ReportPresenter.present(@report.most_capacity_of_type(@depth, 'cpu'), 'Самые обьемные')
+    ReportPresenter.present(@report.e_volume_amount(@depth, 'ssd'), 'Самое большое кол-во доп. дисков')
+    ReportPresenter.present(@report.e_volume_volume(@depth, 'sata'), 'Самый большой обьем доп. дисков')
+  end
+end
+
+Main.new
