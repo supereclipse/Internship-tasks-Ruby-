@@ -12,7 +12,7 @@ class Report
   end
 
   def expensive(n)
-    @vm_list.map { |vm| [vm.id, VMCost.new(vm, @price_list, @volume_list.find { |vol| vol.vm_id == vm.id }).cost_full] }.sort_by { |_id, value| value }.last(n).reverse
+    cheap(n).reverse
   end
 
   def cheap(n)
@@ -33,4 +33,5 @@ class Report
   def e_volume_volume(n, type = 'All')
     @volume_list.map { |extra| [extra.vm_id, extra.get_volume_of_type(type)] }.sort_by { |_id, value| value }.last(n).reverse
   end
+
 end
