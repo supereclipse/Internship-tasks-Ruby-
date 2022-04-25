@@ -1,11 +1,7 @@
-# frozen_string_literal: true
-
-require './lib/report'
-
 # Класс вывода отчетов
 class ReportPresenter
-  def self.present(report, type = 'Undefined report')
-    puts type
-    report.each { |line| puts "VM_ID: #{line[0]} Result: #{line[1]}" }
+  def self.present(report)
+    puts report[1]
+    report[0].each { |line| puts "VM_ID: #{line[0]} Result: #{line[1]}" }
   end
 end
