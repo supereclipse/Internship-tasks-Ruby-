@@ -3,7 +3,7 @@
 require './hw1/lib/report'
 require './hw1/lib/report_presenter'
 require 'csv'
-require './hw1/lib/vms_data_handler'
+require './hw1/lib/data_handler'
 
 depth = ENV['depth'].to_i
 
@@ -13,7 +13,7 @@ vms_data = CSV.read(ENV['vms_path']).map { |arr| Hash[[%i[Id Cpu Ram Hdd_type Hd
 prices = Hash[CSV.read(ENV['prices_path'])]
 
 # Creating a list of vms instances
-vm_list = VMSDataHandler.new(vms_data, volumes_data).create_vm_list
+vm_list = DataHandler.new(vms_data, volumes_data).create_vm_list
 
 report = Report.new(vm_list, prices)
 

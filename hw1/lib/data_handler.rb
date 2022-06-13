@@ -3,7 +3,7 @@
 require './hw1/lib/vm'
 
 # Обрабатывает данные по vm
-class VMSDataHandler
+class DataHandler
   def initialize(vms_data, volumes_data)
     @vms_data = vms_data
     @volumes_data = volumes_data
